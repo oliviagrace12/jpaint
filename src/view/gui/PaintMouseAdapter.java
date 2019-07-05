@@ -6,39 +6,38 @@ import view.interfaces.PaintCanvasBase;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Stack;
 
 /**
  * Created by oliviachisman on 2019-07-04
  */
 public class PaintMouseAdapter extends MouseAdapter {
 
-    Stack<Rectangle> rectangles;
-    PaintCanvasBase paintCanvas;
+    private Rectangle rectangle;
+    private PaintCanvasBase paintCanvas;
 
-    public PaintMouseAdapter(Stack<Rectangle> rectangles, PaintCanvasBase paintCanvas) {
-        this.rectangles = rectangles;
+    public PaintMouseAdapter(PaintCanvasBase paintCanvas) {
         this.paintCanvas = paintCanvas;
     }
 
     @Override
     public void mousePressed(MouseEvent event) {
-        Rectangle rectangle = new Rectangle();
-        rectangle.setX(event.getX());
-        rectangle.setY(event.getY());
-        rectangles.add(rectangle);
+        Rectangle r = new Rectangle();
+        r.setX(event.getX());
+        r.setY(event.getY());
+
+        rectangle = r;
     }
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        if (!rectangles.empty() && rectangles.peek() != null) {
-            Rectangle rectangle = rectangles.pop();
-            rectangle.setWidth(Math.abs(event.getX() - rectangle.getX()));
-            rectangle.setHeight(Math.abs(event.getY() - rectangle.getY()));
-            adjustXY(event, rectangle);
+        Rectangle r = rectangle;
+        rectangle = null;
 
-            render(rectangle);
-        }
+        r.setWidth(Math.abs(event.getX() - r.getX()));
+        r.setHeight(Math.abs(event.getY() - r.getY()));
+        adjustXY(event, r);
+
+        render(r);
     }
 
     private void adjustXY(MouseEvent event, Rectangle rectangle) {

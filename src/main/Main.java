@@ -11,8 +11,6 @@ import view.interfaces.IGuiWindow;
 import view.interfaces.PaintCanvasBase;
 import view.interfaces.IUiModule;
 
-import java.util.Stack;
-
 public class Main {
     public static void main(String[] args) {
         PaintCanvasBase paintCanvas = new PaintCanvas();
@@ -22,7 +20,7 @@ public class Main {
         IJPaintController controller = new JPaintController(uiModule, appState);
         controller.setup();
 
-        paintCanvas.addMouseListener(new PaintMouseAdapter(new Stack<>(), paintCanvas));
+        paintCanvas.addMouseListener(new PaintMouseAdapter(paintCanvas));
 
         // For example purposes only; remove all lines below from your final project.
 
