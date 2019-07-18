@@ -9,7 +9,6 @@ import model.interfaces.IApplicationState;
 import model.shape.Shape;
 import view.interfaces.PaintCanvasBase;
 
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -45,7 +44,6 @@ public class PaintMouseAdapter extends MouseAdapter {
         r.setY2(event.getY());
 
         IRenderStrategy renderStrategy;
-
         if (applicationState.getActiveShapeType().equals(ShapeType.RECTANGLE)) {
             renderStrategy = new RectangleRenderStrategy(paintCanvas);
         } else if (applicationState.getActiveShapeType().equals(ShapeType.ELLIPSE)) {
@@ -53,25 +51,6 @@ public class PaintMouseAdapter extends MouseAdapter {
         } else {
             renderStrategy = new TriangleRenderStrategy(paintCanvas);
         }
-//
         renderStrategy.render(r);
-    }
-
-    private void adjustXY(MouseEvent event, Shape rectangle) {
-        if (event.getX() < rectangle.getX1()) {
-            rectangle.setX1(event.getX());
-        }
-        if (event.getY() < rectangle.getY1()) {
-            rectangle.setY1(event.getY());
-        }
-    }
-
-    private void render(Shape rectangle) {
-        Graphics2D graphics2d = paintCanvas.getGraphics2D();
-        graphics2d.setStroke(new BasicStroke(5));
-        graphics2d.setColor(Color.BLUE);
-        graphics2d.drawRect(rectangle.getX1(), rectangle.getY1(), rectangle.getWidth(), rectangle.getHeight());
-        graphics2d.setColor(Color.GREEN);
-        graphics2d.fillRect(rectangle.getX1(), rectangle.getY1(), rectangle.getWidth(), rectangle.getHeight());
     }
 }

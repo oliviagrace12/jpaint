@@ -18,13 +18,14 @@ public class TriangleRenderStrategy implements IRenderStrategy {
 
     @Override
     public void render(Shape shape) {
+        int[] xs = {shape.getX1(), shape.getX2(), shape.getX1()};
+        int[] ys = {shape.getY1(), shape.getY2(), shape.getY2()};
+
         Graphics2D graphics2d = paintCanvas.getGraphics2D();
         graphics2d.setStroke(new BasicStroke(5));
         graphics2d.setColor(Color.BLUE);
-        int[] xs = {shape.getX1(), shape.getWidth()};
-        int[] ys = {shape.getY1(), shape.getHeight()};
         graphics2d.drawPolygon(xs, ys, 3);
         graphics2d.setColor(Color.GREEN);
-//        graphics2d.fillPolygon(shape.getX1(), shape.getY1(), shape.getWidth(), shape.getHeight());
+        graphics2d.fillPolygon(xs, ys, 3);
     }
 }

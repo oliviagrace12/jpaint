@@ -6,8 +6,6 @@ package model.shape;
 public class Shape {
     private Integer x1;
     private Integer y1;
-    private Integer width;
-    private Integer height;
 
     private Integer x2;
     private Integer y2;
@@ -26,22 +24,6 @@ public class Shape {
 
     public void setY1(Integer y1) {
         this.y1 = y1;
-    }
-
-    public Integer getWidth() {
-        return width;
-    }
-
-    public void setWidth(Integer width) {
-        this.width = width;
-    }
-
-    public Integer getHeight() {
-        return height;
-    }
-
-    public void setHeight(Integer height) {
-        this.height = height;
     }
 
     public Integer getY2() {
