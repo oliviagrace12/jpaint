@@ -13,11 +13,9 @@ import java.awt.*;
 public class EllipseRenderStrategy implements IRenderStrategy {
 
     private final PaintCanvasBase paintCanvas;
-    private IApplicationState applicationState;
 
-    public EllipseRenderStrategy(PaintCanvasBase paintCanvas, IApplicationState applicationState) {
+    public EllipseRenderStrategy(PaintCanvasBase paintCanvas) {
         this.paintCanvas = paintCanvas;
-        this.applicationState = applicationState;
     }
 
     @Override
@@ -30,12 +28,12 @@ public class EllipseRenderStrategy implements IRenderStrategy {
 
         Graphics2D graphics2d = paintCanvas.getGraphics2D();
         graphics2d.setStroke(new BasicStroke(5));
-        if (!applicationState.getActiveShapeShadingType().equals(ShapeShadingType.FILLED_IN)) {
-            graphics2d.setColor(applicationState.getActivePrimaryColor().getColor());
+        if (!shape.getShapeShadingType().equals(ShapeShadingType.FILLED_IN)) {
+            graphics2d.setColor(shape.getPrimaryColor().getColor());
             graphics2d.drawOval(x, y, width, height);
         }
-        if (!applicationState.getActiveShapeShadingType().equals(ShapeShadingType.OUTLINE)) {
-            graphics2d.setColor(applicationState.getActiveSecondaryColor().getColor());
+        if (!shape.getShapeShadingType().equals(ShapeShadingType.OUTLINE)) {
+            graphics2d.setColor(shape.getSecondaryColor().getColor());
             graphics2d.fillOval(x, y, width, height);
         }
     }

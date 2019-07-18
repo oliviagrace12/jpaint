@@ -13,11 +13,9 @@ import java.awt.*;
 public class TriangleRenderStrategy implements IRenderStrategy {
 
     private final PaintCanvasBase paintCanvas;
-    private IApplicationState applicationState;
 
-    public TriangleRenderStrategy(PaintCanvasBase paintCanvas, IApplicationState applicationState) {
+    public TriangleRenderStrategy(PaintCanvasBase paintCanvas) {
         this.paintCanvas = paintCanvas;
-        this.applicationState = applicationState;
     }
 
     @Override
@@ -27,12 +25,12 @@ public class TriangleRenderStrategy implements IRenderStrategy {
 
         Graphics2D graphics2d = paintCanvas.getGraphics2D();
         graphics2d.setStroke(new BasicStroke(5));
-        if (!applicationState.getActiveShapeShadingType().equals(ShapeShadingType.FILLED_IN)) {
-            graphics2d.setColor(applicationState.getActivePrimaryColor().getColor());
+        if (!shape.getShapeShadingType().equals(ShapeShadingType.FILLED_IN)) {
+            graphics2d.setColor(shape.getPrimaryColor().getColor());
             graphics2d.drawPolygon(xs, ys, 3);
         }
-        if (!applicationState.getActiveShapeShadingType().equals(ShapeShadingType.OUTLINE)) {
-            graphics2d.setColor(applicationState.getActiveSecondaryColor().getColor());
+        if (!shape.getShapeShadingType().equals(ShapeShadingType.OUTLINE)) {
+            graphics2d.setColor(shape.getSecondaryColor().getColor());
             graphics2d.fillPolygon(xs, ys, 3);
         }
     }

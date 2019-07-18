@@ -1,5 +1,9 @@
 package model.shape;
 
+import model.ShapeColor;
+import model.ShapeShadingType;
+import model.ShapeType;
+
 /**
  * Created by oliviachisman on 2019-07-04
  */
@@ -8,6 +12,10 @@ public class Shape {
     private Integer y1;
     private Integer x2;
     private Integer y2;
+    private ShapeType shapeType;
+    private ShapeColor primaryColor;
+    private ShapeColor secondaryColor;
+    private ShapeShadingType shapeShadingType;
 
     public Integer getX1() {
         return x1;
@@ -39,5 +47,37 @@ public class Shape {
 
     public void setX2(Integer x1) {
         this.x2 = x1;
+    }
+
+    public ShapeType getShapeType() {
+        return shapeType;
+    }
+
+    public void setShapeType(ShapeType shapeType) {
+        this.shapeType = shapeType;
+    }
+
+    public ShapeColor getPrimaryColor() {
+        return primaryColor;
+    }
+
+    public void setPrimaryColor(ShapeColor primaryColor) {
+        this.primaryColor = primaryColor;
+    }
+
+    public ShapeColor getSecondaryColor() {
+        return secondaryColor;
+    }
+
+    public void setSecondaryColor(ShapeColor secondaryColor) {
+        this.secondaryColor = secondaryColor;
+    }
+
+    public ShapeShadingType getShapeShadingType() {
+        return shapeShadingType;
+    }
+
+    public void setShapeShadingType(ShapeShadingType shapeShadingType) {
+        this.shapeShadingType = shapeShadingType;
     }
 }
