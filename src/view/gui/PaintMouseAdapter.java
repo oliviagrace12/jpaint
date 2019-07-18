@@ -1,6 +1,12 @@
 package view.gui;
 
-import model.shape.Rectangle;
+import controller.EllipseRenderStrategy;
+import controller.IRenderStrategy;
+import controller.RectangleRenderStrategy;
+import controller.TriangleRenderStrategy;
+import model.ShapeType;
+import model.interfaces.IApplicationState;
+import model.shape.Shape;
 import view.interfaces.PaintCanvasBase;
 
 import java.awt.*;
@@ -12,49 +18,60 @@ import java.awt.event.MouseEvent;
  */
 public class PaintMouseAdapter extends MouseAdapter {
 
-    private Rectangle rectangle;
-    private PaintCanvasBase paintCanvas;
+    private Shape shape;
+    private final PaintCanvasBase paintCanvas;
+    private final IApplicationState applicationState;
 
-    public PaintMouseAdapter(PaintCanvasBase paintCanvas) {
+    public PaintMouseAdapter(PaintCanvasBase paintCanvas, IApplicationState applicationState) {
         this.paintCanvas = paintCanvas;
+        this.applicationState = applicationState;
     }
 
     @Override
     public void mousePressed(MouseEvent event) {
-        Rectangle r = new Rectangle();
-        r.setX(event.getX());
-        r.setY(event.getY());
+        Shape r = new Shape();
+        r.setX1(event.getX());
+        r.setY1(event.getY());
 
-        rectangle = r;
+        shape = r;
     }
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        Rectangle r = rectangle;
-        rectangle = null;
+        Shape r = shape;
+        shape = null;
 
-        r.setWidth(Math.abs(event.getX() - r.getX()));
-        r.setHeight(Math.abs(event.getY() - r.getY()));
-        adjustXY(event, r);
+        r.setX2(event.getX());
+        r.setY2(event.getY());
 
-        render(r);
+        IRenderStrategy renderStrategy;
+
+        if (applicationState.getActiveShapeType().equals(ShapeType.RECTANGLE)) {
+            renderStrategy = new RectangleRenderStrategy(paintCanvas);
+        } else if (applicationState.getActiveShapeType().equals(ShapeType.ELLIPSE)) {
+            renderStrategy = new EllipseRenderStrategy(paintCanvas);
+        } else {
+            renderStrategy = new TriangleRenderStrategy(paintCanvas);
+        }
+//
+        renderStrategy.render(r);
     }
 
-    private void adjustXY(MouseEvent event, Rectangle rectangle) {
-        if (event.getX() < rectangle.getX()) {
-            rectangle.setX(event.getX());
+    private void adjustXY(MouseEvent event, Shape rectangle) {
+        if (event.getX() < rectangle.getX1()) {
+            rectangle.setX1(event.getX());
         }
-        if (event.getY() < rectangle.getY()) {
-            rectangle.setY(event.getY());
+        if (event.getY() < rectangle.getY1()) {
+            rectangle.setY1(event.getY());
         }
     }
 
-    private void render(Rectangle rectangle) {
+    private void render(Shape rectangle) {
         Graphics2D graphics2d = paintCanvas.getGraphics2D();
         graphics2d.setStroke(new BasicStroke(5));
         graphics2d.setColor(Color.BLUE);
-        graphics2d.drawRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
+        graphics2d.drawRect(rectangle.getX1(), rectangle.getY1(), rectangle.getWidth(), rectangle.getHeight());
         graphics2d.setColor(Color.GREEN);
-        graphics2d.fillRect(rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight());
+        graphics2d.fillRect(rectangle.getX1(), rectangle.getY1(), rectangle.getWidth(), rectangle.getHeight());
     }
 }
