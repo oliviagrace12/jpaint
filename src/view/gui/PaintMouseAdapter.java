@@ -23,6 +23,7 @@ public class PaintMouseAdapter extends MouseAdapter {
 
     private Stack<Shape> shapes = new Stack<>();
     private List<Shape> selectedShapes = new ArrayList<>();
+    private Offset offset;
     private final PaintCanvasBase paintCanvas;
     private final IApplicationState applicationState;
 
@@ -64,6 +65,8 @@ public class PaintMouseAdapter extends MouseAdapter {
     public void mousePressed(MouseEvent event) {
         if (applicationState.getActiveStartAndEndPointMode().equals(StartAndEndPointMode.DRAW)) {
             startDrawShape(event);
+        } else if (applicationState.getActiveStartAndEndPointMode().equals(StartAndEndPointMode.MOVE)) {
+            startMoveShapes(event);
         }
     }
 
@@ -71,7 +74,30 @@ public class PaintMouseAdapter extends MouseAdapter {
     public void mouseReleased(MouseEvent event) {
         if (applicationState.getActiveStartAndEndPointMode().equals(StartAndEndPointMode.DRAW)) {
             endDrawShape(event);
+        } else if (applicationState.getActiveStartAndEndPointMode().equals(StartAndEndPointMode.MOVE)) {
+            endMoveShapes(event);
         }
+    }
+
+    private void startMoveShapes(MouseEvent event) {
+        offset = new Offset();
+        offset.x1 = event.getX();
+        offset.y1 = event.getY();
+    }
+
+    private void endMoveShapes(MouseEvent event) {
+        offset.x2 = event.getX();
+        offset.y2 = event.getY();
+
+        for (Shape shape : selectedShapes) {
+            moveShape(shape);
+        }
+
+        reRenderAllShapes();
+    }
+
+    private void moveShape(Shape shape) {
+        // TODO
     }
 
     private void startDrawShape(MouseEvent event) {
@@ -111,5 +137,12 @@ public class PaintMouseAdapter extends MouseAdapter {
         }
 
         renderStrategy.render(shape);
+    }
+
+    private class Offset {
+        int x1;
+        int y1;
+        int x2;
+        int y2;
     }
 }
