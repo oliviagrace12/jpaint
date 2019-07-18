@@ -1,5 +1,6 @@
 package controller;
 
+import model.ShapeShadingType;
 import model.interfaces.IApplicationState;
 import model.shape.Shape;
 import view.interfaces.PaintCanvasBase;
@@ -29,9 +30,13 @@ public class EllipseRenderStrategy implements IRenderStrategy {
 
         Graphics2D graphics2d = paintCanvas.getGraphics2D();
         graphics2d.setStroke(new BasicStroke(5));
-        graphics2d.setColor(applicationState.getActivePrimaryColor().getColor());
-        graphics2d.drawOval(x, y, width, height);
-        graphics2d.setColor(applicationState.getActiveSecondaryColor().getColor());
-        graphics2d.fillOval(x, y, width, height);
+        if (!applicationState.getActiveShapeShadingType().equals(ShapeShadingType.FILLED_IN)) {
+            graphics2d.setColor(applicationState.getActivePrimaryColor().getColor());
+            graphics2d.drawOval(x, y, width, height);
+        }
+        if (!applicationState.getActiveShapeShadingType().equals(ShapeShadingType.OUTLINE)) {
+            graphics2d.setColor(applicationState.getActiveSecondaryColor().getColor());
+            graphics2d.fillOval(x, y, width, height);
+        }
     }
 }
