@@ -34,16 +34,30 @@ public class PaintMouseAdapter extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent event) {
         if (applicationState.getActiveStartAndEndPointMode().equals(StartAndEndPointMode.SELECT)) {
-            for (Shape shape : shapes) {
-                if (collisionOccurred()) {
-                    selectedShapes.add(shape);
-                }
-            }
+            selectShapes(event);
         }
     }
 
-    private boolean collisionOccurred() {
-        return false;
+    private void selectShapes(MouseEvent event) {
+        selectedShapes.clear();
+        for (Shape shape : shapes) {
+            if (collisionOccurred(shape, event)) {
+                selectedShapes.add(shape);
+            }
+        }
+        System.out.println("Selected shapes: " + selectedShapes);
+    }
+
+    private boolean collisionOccurred(Shape shape, MouseEvent event) {
+        int lowestX = Math.min(shape.getX1(), shape.getX2());
+        int highestX = Math.max(shape.getX1(), shape.getX2());
+        int lowestY = Math.min(shape.getY1(), shape.getY2());
+        int highestY = Math.max(shape.getY1(), shape.getY2());
+
+        return event.getX() >= lowestX
+                && event.getX() <= highestX
+                && event.getY() >= lowestY
+                && event.getY() <= highestY;
     }
 
     @Override
@@ -69,24 +83,33 @@ public class PaintMouseAdapter extends MouseAdapter {
     }
 
     private void endDrawShape(MouseEvent event) {
-        Shape r = shapes.peek();
+        Shape shape = shapes.peek();
 
-        r.setX2(event.getX());
-        r.setY2(event.getY());
-        r.setShapeType(applicationState.getActiveShapeType());
-        r.setShapeShadingType(applicationState.getActiveShapeShadingType());
-        r.setPrimaryColor(applicationState.getActivePrimaryColor());
-        r.setSecondaryColor(applicationState.getActiveSecondaryColor());
+        shape.setX2(event.getX());
+        shape.setY2(event.getY());
+        shape.setShapeType(applicationState.getActiveShapeType());
+        shape.setShapeShadingType(applicationState.getActiveShapeShadingType());
+        shape.setPrimaryColor(applicationState.getActivePrimaryColor());
+        shape.setSecondaryColor(applicationState.getActiveSecondaryColor());
 
+        renderShape(shape);
+    }
+
+    private void reRenderAllShapes() {
+        paintCanvas.repaint();
+        shapes.forEach(this::renderShape);
+    }
+
+    private void renderShape(Shape shape) {
         IRenderStrategy renderStrategy;
-        if (r.getShapeType().equals(ShapeType.RECTANGLE)) {
+        if (shape.getShapeType().equals(ShapeType.RECTANGLE)) {
             renderStrategy = new RectangleRenderStrategy(paintCanvas);
-        } else if (r.getShapeType().equals(ShapeType.ELLIPSE)) {
+        } else if (shape.getShapeType().equals(ShapeType.ELLIPSE)) {
             renderStrategy = new EllipseRenderStrategy(paintCanvas);
         } else {
             renderStrategy = new TriangleRenderStrategy(paintCanvas);
         }
 
-        renderStrategy.render(r);
+        renderStrategy.render(shape);
     }
 }

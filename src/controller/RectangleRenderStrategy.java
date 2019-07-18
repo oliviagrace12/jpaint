@@ -1,7 +1,6 @@
 package controller;
 
 import model.ShapeShadingType;
-import model.interfaces.IApplicationState;
 import model.shape.Shape;
 import view.interfaces.PaintCanvasBase;
 
