@@ -1,5 +1,6 @@
 package controller;
 
+import model.interfaces.IApplicationState;
 import model.shape.Shape;
 import view.interfaces.PaintCanvasBase;
 
@@ -11,9 +12,11 @@ import java.awt.*;
 public class TriangleRenderStrategy implements IRenderStrategy {
 
     private final PaintCanvasBase paintCanvas;
+    private IApplicationState applicationState;
 
-    public TriangleRenderStrategy(PaintCanvasBase paintCanvas) {
+    public TriangleRenderStrategy(PaintCanvasBase paintCanvas, IApplicationState applicationState) {
         this.paintCanvas = paintCanvas;
+        this.applicationState = applicationState;
     }
 
     @Override
@@ -23,9 +26,9 @@ public class TriangleRenderStrategy implements IRenderStrategy {
 
         Graphics2D graphics2d = paintCanvas.getGraphics2D();
         graphics2d.setStroke(new BasicStroke(5));
-        graphics2d.setColor(Color.BLUE);
+        graphics2d.setColor(applicationState.getActivePrimaryColor().getColor());
         graphics2d.drawPolygon(xs, ys, 3);
-        graphics2d.setColor(Color.GREEN);
+        graphics2d.setColor(applicationState.getActiveSecondaryColor().getColor());
         graphics2d.fillPolygon(xs, ys, 3);
     }
 }

@@ -45,11 +45,11 @@ public class PaintMouseAdapter extends MouseAdapter {
 
         IRenderStrategy renderStrategy;
         if (applicationState.getActiveShapeType().equals(ShapeType.RECTANGLE)) {
-            renderStrategy = new RectangleRenderStrategy(paintCanvas);
+            renderStrategy = new RectangleRenderStrategy(paintCanvas, applicationState);
         } else if (applicationState.getActiveShapeType().equals(ShapeType.ELLIPSE)) {
-            renderStrategy = new EllipseRenderStrategy(paintCanvas);
+            renderStrategy = new EllipseRenderStrategy(paintCanvas, applicationState);
         } else {
-            renderStrategy = new TriangleRenderStrategy(paintCanvas);
+            renderStrategy = new TriangleRenderStrategy(paintCanvas, applicationState);
         }
         renderStrategy.render(r);
     }

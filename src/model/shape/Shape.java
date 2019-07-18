@@ -6,7 +6,6 @@ package model.shape;
 public class Shape {
     private Integer x1;
     private Integer y1;
-
     private Integer x2;
     private Integer y2;
 

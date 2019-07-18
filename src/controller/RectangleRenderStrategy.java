@@ -1,10 +1,10 @@
 package controller;
 
+import model.interfaces.IApplicationState;
 import model.shape.Shape;
 import view.interfaces.PaintCanvasBase;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 
 /**
  * Created by oliviachisman on 2019-07-16
@@ -12,9 +12,11 @@ import java.awt.event.MouseEvent;
 public class RectangleRenderStrategy implements IRenderStrategy {
 
     private final PaintCanvasBase paintCanvas;
+    private final IApplicationState applicationState;
 
-    public RectangleRenderStrategy(PaintCanvasBase paintCanvas) {
+    public RectangleRenderStrategy(PaintCanvasBase paintCanvas, IApplicationState applicationState) {
         this.paintCanvas = paintCanvas;
+        this.applicationState = applicationState;
     }
 
     @Override
@@ -27,9 +29,9 @@ public class RectangleRenderStrategy implements IRenderStrategy {
 
         Graphics2D graphics2d = paintCanvas.getGraphics2D();
         graphics2d.setStroke(new BasicStroke(5));
-        graphics2d.setColor(Color.BLUE);
+        graphics2d.setColor(applicationState.getActivePrimaryColor().getColor());
         graphics2d.drawRect(x, y, width, height);
-        graphics2d.setColor(Color.GREEN);
+        graphics2d.setColor(applicationState.getActiveSecondaryColor().getColor());
         graphics2d.fillRect(x, y, width, height);
     }
 

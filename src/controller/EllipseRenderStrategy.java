@@ -1,5 +1,6 @@
 package controller;
 
+import model.interfaces.IApplicationState;
 import model.shape.Shape;
 import view.interfaces.PaintCanvasBase;
 
@@ -11,9 +12,11 @@ import java.awt.*;
 public class EllipseRenderStrategy implements IRenderStrategy {
 
     private final PaintCanvasBase paintCanvas;
+    private IApplicationState applicationState;
 
-    public EllipseRenderStrategy(PaintCanvasBase paintCanvas) {
+    public EllipseRenderStrategy(PaintCanvasBase paintCanvas, IApplicationState applicationState) {
         this.paintCanvas = paintCanvas;
+        this.applicationState = applicationState;
     }
 
     @Override
@@ -26,9 +29,9 @@ public class EllipseRenderStrategy implements IRenderStrategy {
 
         Graphics2D graphics2d = paintCanvas.getGraphics2D();
         graphics2d.setStroke(new BasicStroke(5));
-        graphics2d.setColor(Color.BLUE);
+        graphics2d.setColor(applicationState.getActivePrimaryColor().getColor());
         graphics2d.drawOval(x, y, width, height);
-        graphics2d.setColor(Color.GREEN);
+        graphics2d.setColor(applicationState.getActiveSecondaryColor().getColor());
         graphics2d.fillOval(x, y, width, height);
     }
 }
