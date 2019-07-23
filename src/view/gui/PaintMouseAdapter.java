@@ -12,9 +12,7 @@ import view.interfaces.PaintCanvasBase;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Created by oliviachisman on 2019-07-04
@@ -22,7 +20,7 @@ import java.util.Stack;
 public class PaintMouseAdapter extends MouseAdapter {
 
     private Stack<Shape> shapes = new Stack<>();
-    private List<Shape> selectedShapes = new ArrayList<>();
+    private Set<Shape> selectedShapes = new HashSet<>();
     private Offset offset;
     private final PaintCanvasBase paintCanvas;
     private final IApplicationState applicationState;
@@ -40,11 +38,15 @@ public class PaintMouseAdapter extends MouseAdapter {
     }
 
     private void selectShapes(MouseEvent event) {
-        selectedShapes.clear();
+        boolean noShapesSelected = true;
         for (Shape shape : shapes) {
             if (collisionOccurred(shape, event)) {
                 selectedShapes.add(shape);
+                noShapesSelected = false;
             }
+        }
+        if (noShapesSelected) {
+            selectedShapes.clear();
         }
         System.out.println("Selected shapes: " + selectedShapes);
     }
@@ -89,15 +91,21 @@ public class PaintMouseAdapter extends MouseAdapter {
         offset.x2 = event.getX();
         offset.y2 = event.getY();
 
+        int offsetX = offset.x2 - offset.x1;
+        int offsetY = offset.y2 - offset.y1;
+
         for (Shape shape : selectedShapes) {
-            moveShape(shape);
+            moveShape(shape, offsetX, offsetY);
         }
 
         reRenderAllShapes();
     }
 
-    private void moveShape(Shape shape) {
-        // TODO
+    private void moveShape(Shape shape, int offsetX, int offsetY) {
+        shape.setX1(shape.getX1() + offsetX);
+        shape.setX2(shape.getX2() + offsetX);
+        shape.setY1(shape.getY1() + offsetY);
+        shape.setY2(shape.getY2() + offsetY);
     }
 
     private void startDrawShape(MouseEvent event) {
