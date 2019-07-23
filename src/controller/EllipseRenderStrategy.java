@@ -27,13 +27,21 @@ public class EllipseRenderStrategy implements IRenderStrategy {
 
         Graphics2D graphics2d = paintCanvas.getGraphics2D();
         graphics2d.setStroke(new BasicStroke(5));
-        if (!shape.getShapeShadingType().equals(ShapeShadingType.FILLED_IN)) {
+        if (shapeShouldHaveOutline(shape)) {
             graphics2d.setColor(shape.getPrimaryColor().getColor());
             graphics2d.drawOval(x, y, width, height);
         }
-        if (!shape.getShapeShadingType().equals(ShapeShadingType.OUTLINE)) {
+        if (shapeShouldBeFilledIn(shape)) {
             graphics2d.setColor(shape.getSecondaryColor().getColor());
             graphics2d.fillOval(x, y, width, height);
         }
+    }
+
+    private boolean shapeShouldBeFilledIn(Shape shape) {
+        return !shape.getShapeShadingType().equals(ShapeShadingType.OUTLINE);
+    }
+
+    private boolean shapeShouldHaveOutline(Shape shape) {
+        return !shape.getShapeShadingType().equals(ShapeShadingType.FILLED_IN);
     }
 }
