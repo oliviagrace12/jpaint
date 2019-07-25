@@ -10,6 +10,7 @@ import model.interfaces.IApplicationState;
 import model.shape.Shape;
 import view.interfaces.PaintCanvasBase;
 
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.*;
@@ -94,10 +95,13 @@ public class PaintMouseAdapter extends MouseAdapter {
         int offsetX = offset.x2 - offset.x1;
         int offsetY = offset.y2 - offset.y1;
 
+        if (selectedShapes.isEmpty()) {
+            return;
+        }
+
         for (Shape shape : selectedShapes) {
             moveShape(shape, offsetX, offsetY);
         }
-
         reRenderAllShapes();
     }
 
@@ -130,8 +134,14 @@ public class PaintMouseAdapter extends MouseAdapter {
     }
 
     private void reRenderAllShapes() {
-        paintCanvas.repaint();
+        clearCanvas();
         shapes.forEach(this::renderShape);
+    }
+
+    private void clearCanvas() {
+        Graphics2D graphics2D = paintCanvas.getGraphics2D();
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.fillRect(0, 0, 50000, 50000);
     }
 
     private void renderShape(Shape shape) {
