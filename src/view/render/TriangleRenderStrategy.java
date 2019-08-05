@@ -1,6 +1,5 @@
 package view.render;
 
-import model.shape.ShapeShadingType;
 import model.shape.Shape;
 import view.interfaces.RenderStrategyBase;
 import view.interfaces.PaintCanvasBase;
@@ -12,7 +11,7 @@ import java.awt.*;
  */
 public class TriangleRenderStrategy extends RenderStrategyBase {
 
-    public TriangleRenderStrategy(PaintCanvasBase paintCanvas) {
+    ZZTriangleRenderStrategy(PaintCanvasBase paintCanvas) {
         super(paintCanvas);
     }
 
@@ -22,12 +21,11 @@ public class TriangleRenderStrategy extends RenderStrategyBase {
         int[] ys = {shape.getY1(), shape.getY2(), shape.getY2()};
 
         Graphics2D graphics2d = paintCanvas.getGraphics2D();
-        graphics2d.setStroke(new BasicStroke(5));
-        if (!shape.getShapeShadingType().equals(ShapeShadingType.FILLED_IN)) {
+        if (shapeShouldHaveOutline(shape)) {
             graphics2d.setColor(shape.getPrimaryColor().getColor());
             graphics2d.drawPolygon(xs, ys, 3);
         }
-        if (!shape.getShapeShadingType().equals(ShapeShadingType.OUTLINE)) {
+        if (shapeShouldBeFilledIn(shape)) {
             graphics2d.setColor(shape.getSecondaryColor().getColor());
             graphics2d.fillPolygon(xs, ys, 3);
         }

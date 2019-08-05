@@ -1,6 +1,5 @@
 package view.render;
 
-import model.shape.ShapeShadingType;
 import model.shape.Shape;
 import view.interfaces.RenderStrategyBase;
 import view.interfaces.PaintCanvasBase;
@@ -25,12 +24,11 @@ public class RectangleRenderStrategy extends RenderStrategyBase {
         int y = shape.getY2() < shape.getY1() ? shape.getY2() : shape.getY1();
 
         Graphics2D graphics2d = paintCanvas.getGraphics2D();
-        graphics2d.setStroke(new BasicStroke(5));
-        if (!shape.getShapeShadingType().equals(ShapeShadingType.FILLED_IN)) {
+        if (shapeShouldHaveOutline(shape)) {
             graphics2d.setColor(shape.getPrimaryColor().getColor());
             graphics2d.drawRect(x, y, width, height);
         }
-        if (!shape.getShapeShadingType().equals(ShapeShadingType.OUTLINE)) {
+        if (shapeShouldBeFilledIn(shape)) {
             graphics2d.setColor(shape.getSecondaryColor().getColor());
             graphics2d.fillRect(x, y, width, height);
         }

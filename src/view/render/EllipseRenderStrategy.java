@@ -1,6 +1,5 @@
 package view.render;
 
-import model.shape.ShapeShadingType;
 import model.shape.Shape;
 import view.interfaces.RenderStrategyBase;
 import view.interfaces.PaintCanvasBase;
@@ -25,7 +24,6 @@ public class EllipseRenderStrategy extends RenderStrategyBase {
         int y = shape.getY2() < shape.getY1() ? shape.getY2() : shape.getY1();
 
         Graphics2D graphics2d = paintCanvas.getGraphics2D();
-        graphics2d.setStroke(new BasicStroke(5));
         if (shapeShouldHaveOutline(shape)) {
             graphics2d.setColor(shape.getPrimaryColor().getColor());
             graphics2d.drawOval(x, y, width, height);
@@ -34,13 +32,5 @@ public class EllipseRenderStrategy extends RenderStrategyBase {
             graphics2d.setColor(shape.getSecondaryColor().getColor());
             graphics2d.fillOval(x, y, width, height);
         }
-    }
-
-    private boolean shapeShouldBeFilledIn(Shape shape) {
-        return !shape.getShapeShadingType().equals(ShapeShadingType.OUTLINE);
-    }
-
-    private boolean shapeShouldHaveOutline(Shape shape) {
-        return !shape.getShapeShadingType().equals(ShapeShadingType.FILLED_IN);
     }
 }

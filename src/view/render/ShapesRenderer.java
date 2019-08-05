@@ -39,14 +39,14 @@ public class ShapesRenderer {
     public void renderShape(Shape shape) {
         ShapeRenderer shapeRenderer;
         if (shape.getShapeType().equals(ShapeType.RECTANGLE)) {
-            shapeRenderer = new ShapeRenderer(shape, rectangleRenderStrategy);
+            shapeRenderer = new ShapeRenderer(rectangleRenderStrategy);
         } else if (shape.getShapeType().equals(ShapeType.ELLIPSE)) {
-            shapeRenderer = new ShapeRenderer(shape, ellipseRenderStrategy);
+            shapeRenderer = new ShapeRenderer(ellipseRenderStrategy);
         } else {
-            shapeRenderer = new ShapeRenderer(shape, triangleRenderStrategy);
+            shapeRenderer = new ShapeRenderer(triangleRenderStrategy);
         }
 
-        shapeRenderer.render();
+        shapeRenderer.render(shape, paintCanvas);
     }
 
 }

@@ -1,6 +1,5 @@
 package view.render;
 
-import model.shape.Shape;
 import view.interfaces.RenderStrategyBase;
 import view.interfaces.PaintCanvasBase;
 
