@@ -1,16 +1,24 @@
 package controller;
 
 import model.interfaces.IApplicationState;
+import model.shape.Shape;
 import view.EventName;
 import view.interfaces.IUiModule;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class JPaintController implements IJPaintController {
     private final IUiModule uiModule;
     private final IApplicationState applicationState;
+    private final Set<Shape> selectedShapes;
+    private final Set<Shape> copiedShapes;
 
-    public JPaintController(IUiModule uiModule, IApplicationState applicationState) {
+    public JPaintController(IUiModule uiModule, IApplicationState applicationState, Set<Shape> selectedShapes) {
         this.uiModule = uiModule;
         this.applicationState = applicationState;
+        this.selectedShapes = selectedShapes;
+        this.copiedShapes = new HashSet<>();
     }
 
     @Override
@@ -24,6 +32,10 @@ public class JPaintController implements IJPaintController {
         uiModule.addEvent(EventName.CHOOSE_SECONDARY_COLOR, () -> applicationState.setActiveSecondaryColor());
         uiModule.addEvent(EventName.CHOOSE_SHADING_TYPE, () -> applicationState.setActiveShadingType());
         uiModule.addEvent(EventName.CHOOSE_START_POINT_ENDPOINT_MODE, () -> applicationState.setActiveStartAndEndPointMode());
-        // TODO add more events here once add more functionality
+        uiModule.addEvent(EventName.COPY, () -> {
+            copiedShapes.clear();
+            copiedShapes.addAll(selectedShapes);
+            System.out.println("COPIED SHAPES: " + copiedShapes);
+        });
     }
 }

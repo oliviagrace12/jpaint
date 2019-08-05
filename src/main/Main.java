@@ -3,6 +3,7 @@ package main;
 import controller.IJPaintController;
 import controller.JPaintController;
 import model.persistence.ApplicationState;
+import model.shape.Shape;
 import view.gui.Gui;
 import view.gui.GuiWindow;
 import view.gui.PaintCanvas;
@@ -13,6 +14,7 @@ import view.interfaces.IUiModule;
 import view.render.ShapesRenderer;
 
 import java.util.HashSet;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,11 +22,14 @@ public class Main {
         IGuiWindow guiWindow = new GuiWindow(paintCanvas);
         IUiModule uiModule = new Gui(guiWindow);
         ApplicationState appState = new ApplicationState(uiModule);
-        IJPaintController controller = new JPaintController(uiModule, appState);
+
+        Set<Shape> selectedShapes = new HashSet<>();
+
+        IJPaintController controller = new JPaintController(uiModule, appState, selectedShapes);
         controller.setup();
 
         paintCanvas.addMouseListener(
-                new PaintMouseAdapter(appState, new ShapesRenderer(paintCanvas), new HashSet<>(), new HashSet<>()));
+                new PaintMouseAdapter(appState, new ShapesRenderer(paintCanvas), new HashSet<>(), selectedShapes));
 
         // For example purposes only; remove all lines below from your final project.
 
