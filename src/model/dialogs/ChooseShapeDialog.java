@@ -1,6 +1,6 @@
 package model.dialogs;
 
-import model.ShapeType;
+import model.shape.ShapeType;
 import model.interfaces.IApplicationState;
 import view.interfaces.IDialogChoice;
 

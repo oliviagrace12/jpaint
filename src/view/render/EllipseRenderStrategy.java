@@ -1,7 +1,8 @@
-package controller;
+package view.render;
 
-import model.ShapeShadingType;
+import model.shape.ShapeShadingType;
 import model.shape.Shape;
+import view.interfaces.RenderStrategyBase;
 import view.interfaces.PaintCanvasBase;
 
 import java.awt.*;
@@ -9,12 +10,10 @@ import java.awt.*;
 /**
  * Created by oliviachisman on 2019-07-16
  */
-public class EllipseRenderStrategy implements IRenderStrategy {
+public class EllipseRenderStrategy extends RenderStrategyBase {
 
-    private final PaintCanvasBase paintCanvas;
-
-    public EllipseRenderStrategy(PaintCanvasBase paintCanvas) {
-        this.paintCanvas = paintCanvas;
+    EllipseRenderStrategy(PaintCanvasBase paintCanvas) {
+        super(paintCanvas);
     }
 
     @Override

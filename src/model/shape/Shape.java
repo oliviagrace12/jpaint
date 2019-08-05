@@ -1,9 +1,5 @@
 package model.shape;
 
-import model.ShapeColor;
-import model.ShapeShadingType;
-import model.ShapeType;
-
 /**
  * Created by oliviachisman on 2019-07-04
  */

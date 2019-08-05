@@ -1,7 +1,8 @@
-package controller;
+package view.render;
 
-import model.ShapeShadingType;
+import model.shape.ShapeShadingType;
 import model.shape.Shape;
+import view.interfaces.RenderStrategyBase;
 import view.interfaces.PaintCanvasBase;
 
 import java.awt.*;
@@ -9,12 +10,10 @@ import java.awt.*;
 /**
  * Created by oliviachisman on 2019-07-16
  */
-public class RectangleRenderStrategy implements IRenderStrategy {
+public class RectangleRenderStrategy extends RenderStrategyBase {
 
-    private final PaintCanvasBase paintCanvas;
-
-    public RectangleRenderStrategy(PaintCanvasBase paintCanvas) {
-        this.paintCanvas = paintCanvas;
+    RectangleRenderStrategy(PaintCanvasBase paintCanvas) {
+        super(paintCanvas);
     }
 
     @Override
