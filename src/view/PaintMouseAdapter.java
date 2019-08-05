@@ -1,6 +1,7 @@
 package view;
 
 import model.interfaces.IApplicationState;
+import model.shape.Shape;
 import model.shape.StartAndEndPointMode;
 import view.command.DrawCommand;
 import view.command.MoveCommand;
@@ -10,19 +11,24 @@ import view.render.ShapesRenderer;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Stack;
 
 /**
  * Created by oliviachisman on 2019-07-04
  */
 public class PaintMouseAdapter extends MouseAdapter {
 
-    private ShapesTracker shapesTracker;
-    private SelectedShapesTracker selectedShapesTracker;
+    private Set<Shape> shapesTracker;
+    private Set<Shape> selectedShapesTracker;
     private MouseEvent lastMousePressedEvent;
     private final IApplicationState applicationState;
     private final ShapesRenderer shapesRenderer;
 
-    public PaintMouseAdapter(IApplicationState applicationState, ShapesRenderer shapesRenderer, ShapesTracker shapesTracker, SelectedShapesTracker selectedShapesTracker) {
+    public PaintMouseAdapter(IApplicationState applicationState, ShapesRenderer shapesRenderer, Set<Shape> shapesTracker,
+                             Set<Shape> selectedShapesTracker) {
         this.applicationState = applicationState;
         this.shapesRenderer = shapesRenderer;
         this.shapesTracker = shapesTracker;

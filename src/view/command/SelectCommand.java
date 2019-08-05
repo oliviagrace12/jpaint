@@ -1,11 +1,11 @@
 package view.command;
 
 import model.shape.Shape;
-import view.SelectedShapesTracker;
-import view.ShapesTracker;
 import view.interfaces.ICommand;
 
 import java.awt.event.MouseEvent;
+import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created by oliviachisman on 2019-08-04
@@ -14,10 +14,11 @@ public class SelectCommand implements ICommand {
 
     private final MouseEvent event1;
     private final MouseEvent event2;
-    private final ShapesTracker shapesTracker;
-    private final SelectedShapesTracker selectedShapes;
+    private final Collection<Shape> shapesTracker;
+    private final Set<Shape> selectedShapes;
 
-    public SelectCommand(MouseEvent event1, MouseEvent event2, ShapesTracker shapesTracker, SelectedShapesTracker selectedShapesTracker) {
+    public SelectCommand(MouseEvent event1, MouseEvent event2, Collection<Shape> shapesTracker,
+                         Set<Shape> selectedShapesTracker) {
         this.event1 = event1;
         this.event2 = event2;
         this.shapesTracker = shapesTracker;
@@ -31,10 +32,10 @@ public class SelectCommand implements ICommand {
         int zoneMinY = Math.min(event1.getY(), event2.getY());
         int zoneMaxY = Math.max(event1.getY(), event2.getY());
 
-        selectedShapes.clearSelectedShapes();
-        for (Shape shape : shapesTracker.getAllShapes()) {
+        selectedShapes.clear();
+        for (Shape shape : shapesTracker) {
             if (collisionOccurred(shape, zoneMinX, zoneMaxX, zoneMinY, zoneMaxY)) {
-                selectedShapes.addShape(shape);
+                selectedShapes.add(shape);
             }
         }
     }

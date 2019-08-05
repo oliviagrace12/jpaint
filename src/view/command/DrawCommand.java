@@ -2,11 +2,11 @@ package view.command;
 
 import model.interfaces.IApplicationState;
 import model.shape.Shape;
-import view.ShapesTracker;
 import view.interfaces.ICommand;
 import view.render.ShapesRenderer;
 
 import java.awt.event.MouseEvent;
+import java.util.Set;
 
 /**
  * Created by oliviachisman on 2019-08-04
@@ -17,10 +17,10 @@ public class DrawCommand implements ICommand {
     private final MouseEvent event2;
     private final IApplicationState applicationState;
     private final ShapesRenderer shapeRenderer;
-    private final ShapesTracker shapesTracker;
+    private final Set<Shape> shapesTracker;
 
     public DrawCommand(MouseEvent event1, MouseEvent event2, IApplicationState applicationState,
-                       ShapesRenderer shapeRenderer, ShapesTracker shapesTracker) {
+                       ShapesRenderer shapeRenderer, Set<Shape> shapesTracker) {
         this.event1 = event1;
         this.event2 = event2;
         this.applicationState = applicationState;
@@ -42,6 +42,6 @@ public class DrawCommand implements ICommand {
         shape.setSecondaryColor(applicationState.getActiveSecondaryColor());
 
         shapeRenderer.renderShape(shape);
-        shapesTracker.addShape(shape);
+        shapesTracker.add(shape);
     }
 }

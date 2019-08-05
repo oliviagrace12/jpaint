@@ -3,8 +3,6 @@ package main;
 import controller.IJPaintController;
 import controller.JPaintController;
 import model.persistence.ApplicationState;
-import view.SelectedShapesTracker;
-import view.ShapesTracker;
 import view.gui.Gui;
 import view.gui.GuiWindow;
 import view.gui.PaintCanvas;
@@ -13,6 +11,8 @@ import view.interfaces.IGuiWindow;
 import view.interfaces.PaintCanvasBase;
 import view.interfaces.IUiModule;
 import view.render.ShapesRenderer;
+
+import java.util.HashSet;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,7 +24,7 @@ public class Main {
         controller.setup();
 
         paintCanvas.addMouseListener(
-                new PaintMouseAdapter(appState, new ShapesRenderer(paintCanvas), new ShapesTracker(), new SelectedShapesTracker()));
+                new PaintMouseAdapter(appState, new ShapesRenderer(paintCanvas), new HashSet<>(), new HashSet<>()));
 
         // For example purposes only; remove all lines below from your final project.
 

@@ -1,12 +1,11 @@
 package view.command;
 
 import model.shape.Shape;
-import view.SelectedShapesTracker;
-import view.ShapesTracker;
 import view.interfaces.ICommand;
 import view.render.ShapesRenderer;
 
 import java.awt.event.MouseEvent;
+import java.util.Set;
 
 /**
  * Created by oliviachisman on 2019-08-04
@@ -15,12 +14,12 @@ public class MoveCommand implements ICommand {
 
     private final MouseEvent event1;
     private final MouseEvent event2;
-    private final ShapesTracker shapesTracker;
-    private final SelectedShapesTracker selectedShapesTracker;
+    private final Set<Shape> shapesTracker;
+    private final Set<Shape> selectedShapesTracker;
     private final ShapesRenderer shapesRenderer;
 
-    public MoveCommand(MouseEvent event1, MouseEvent event2, ShapesTracker shapesTracker,
-                       SelectedShapesTracker selectedShapesTracker, ShapesRenderer shapesRenderer) {
+    public MoveCommand(MouseEvent event1, MouseEvent event2, Set<Shape> shapesTracker,
+                       Set<Shape> selectedShapesTracker, ShapesRenderer shapesRenderer) {
         this.event1 = event1;
         this.event2 = event2;
         this.shapesTracker = shapesTracker;
@@ -33,14 +32,14 @@ public class MoveCommand implements ICommand {
         int offsetX = event2.getX() - event1.getX();
         int offsetY = event2.getY() - event1.getY();
 
-        if (selectedShapesTracker.noShapedSelected()) {
+        if (selectedShapesTracker.isEmpty()) {
             return;
         }
 
-        for (Shape shape : selectedShapesTracker.getSelectedShapes()) {
+        for (Shape shape : selectedShapesTracker) {
             moveShape(shape, offsetX, offsetY);
         }
-        shapesRenderer.reRenderAllShapes(shapesTracker.getAllShapes());
+        shapesRenderer.reRenderAllShapes(shapesTracker);
     }
 
     private void moveShape(Shape shape, int offsetX, int offsetY) {
