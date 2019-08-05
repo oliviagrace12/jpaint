@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public class TriangleRenderStrategy extends RenderStrategyBase {
 
-    ZZTriangleRenderStrategy(PaintCanvasBase paintCanvas) {
+    TriangleRenderStrategy(PaintCanvasBase paintCanvas) {
         super(paintCanvas);
     }
 
