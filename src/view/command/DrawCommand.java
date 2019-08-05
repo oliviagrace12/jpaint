@@ -17,15 +17,15 @@ public class DrawCommand implements ICommand {
     private final MouseEvent event2;
     private final IApplicationState applicationState;
     private final ShapesRenderer shapeRenderer;
-    private final Set<Shape> shapesTracker;
+    private final Set<Shape> allShapes;
 
     public DrawCommand(MouseEvent event1, MouseEvent event2, IApplicationState applicationState,
-                       ShapesRenderer shapeRenderer, Set<Shape> shapesTracker) {
+                       ShapesRenderer shapeRenderer, Set<Shape> allShapes) {
         this.event1 = event1;
         this.event2 = event2;
         this.applicationState = applicationState;
         this.shapeRenderer = shapeRenderer;
-        this.shapesTracker = shapesTracker;
+        this.allShapes = allShapes;
     }
 
     @Override
@@ -42,6 +42,6 @@ public class DrawCommand implements ICommand {
         shape.setSecondaryColor(applicationState.getActiveSecondaryColor());
 
         shapeRenderer.renderShape(shape);
-        shapesTracker.add(shape);
+        allShapes.add(shape);
     }
 }

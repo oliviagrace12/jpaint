@@ -4,7 +4,6 @@ import model.shape.Shape;
 import view.interfaces.ICommand;
 
 import java.awt.event.MouseEvent;
-import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -14,14 +13,14 @@ public class SelectCommand implements ICommand {
 
     private final MouseEvent event1;
     private final MouseEvent event2;
-    private final Collection<Shape> shapesTracker;
+    private final Set<Shape> allShapes;
     private final Set<Shape> selectedShapes;
 
-    public SelectCommand(MouseEvent event1, MouseEvent event2, Collection<Shape> shapesTracker,
+    public SelectCommand(MouseEvent event1, MouseEvent event2, Set<Shape> allShapes,
                          Set<Shape> selectedShapesTracker) {
         this.event1 = event1;
         this.event2 = event2;
-        this.shapesTracker = shapesTracker;
+        this.allShapes = allShapes;
         this.selectedShapes = selectedShapesTracker;
     }
 
@@ -33,7 +32,7 @@ public class SelectCommand implements ICommand {
         int zoneMaxY = Math.max(event1.getY(), event2.getY());
 
         selectedShapes.clear();
-        for (Shape shape : shapesTracker) {
+        for (Shape shape : allShapes) {
             if (collisionOccurred(shape, zoneMinX, zoneMaxX, zoneMinY, zoneMaxY)) {
                 selectedShapes.add(shape);
             }

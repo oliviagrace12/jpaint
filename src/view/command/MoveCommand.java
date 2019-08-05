@@ -14,16 +14,16 @@ public class MoveCommand implements ICommand {
 
     private final MouseEvent event1;
     private final MouseEvent event2;
-    private final Set<Shape> shapesTracker;
-    private final Set<Shape> selectedShapesTracker;
+    private final Set<Shape> allShapes;
+    private final Set<Shape> selectedShapes;
     private final ShapesRenderer shapesRenderer;
 
-    public MoveCommand(MouseEvent event1, MouseEvent event2, Set<Shape> shapesTracker,
-                       Set<Shape> selectedShapesTracker, ShapesRenderer shapesRenderer) {
+    public MoveCommand(MouseEvent event1, MouseEvent event2, Set<Shape> allShapes,
+                       Set<Shape> selectedShapes, ShapesRenderer shapesRenderer) {
         this.event1 = event1;
         this.event2 = event2;
-        this.shapesTracker = shapesTracker;
-        this.selectedShapesTracker = selectedShapesTracker;
+        this.allShapes = allShapes;
+        this.selectedShapes = selectedShapes;
         this.shapesRenderer = shapesRenderer;
     }
 
@@ -32,14 +32,15 @@ public class MoveCommand implements ICommand {
         int offsetX = event2.getX() - event1.getX();
         int offsetY = event2.getY() - event1.getY();
 
-        if (selectedShapesTracker.isEmpty()) {
+        if (selectedShapes.isEmpty()) {
             return;
         }
 
-        for (Shape shape : selectedShapesTracker) {
+        for (Shape shape : selectedShapes) {
             moveShape(shape, offsetX, offsetY);
         }
-        shapesRenderer.reRenderAllShapes(shapesTracker);
+        
+        shapesRenderer.reRenderAllShapes(allShapes);
     }
 
     private void moveShape(Shape shape, int offsetX, int offsetY) {
