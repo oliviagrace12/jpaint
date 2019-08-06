@@ -23,13 +23,15 @@ public class Main {
         IUiModule uiModule = new Gui(guiWindow);
         ApplicationState appState = new ApplicationState(uiModule);
 
+        Set<Shape> allShapes = new HashSet<>();
         Set<Shape> selectedShapes = new HashSet<>();
+        ShapesRenderer shapesRenderer = new ShapesRenderer(paintCanvas);
 
-        IJPaintController controller = new JPaintController(uiModule, appState, selectedShapes);
+        IJPaintController controller = new JPaintController(uiModule, appState, shapesRenderer, allShapes, selectedShapes);
         controller.setup();
 
         paintCanvas.addMouseListener(
-                new PaintMouseAdapter(appState, new ShapesRenderer(paintCanvas), new HashSet<>(), selectedShapes));
+                new PaintMouseAdapter(appState, shapesRenderer, allShapes, selectedShapes));
 
         // For example purposes only; remove all lines below from your final project.
 
