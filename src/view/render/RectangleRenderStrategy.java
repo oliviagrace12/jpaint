@@ -24,6 +24,7 @@ public class RectangleRenderStrategy extends RenderStrategyBase {
         int y = shape.getY2() < shape.getY1() ? shape.getY2() : shape.getY1();
 
         Graphics2D graphics2d = paintCanvas.getGraphics2D();
+        graphics2d.setStroke(new BasicStroke(5));
         if (shapeShouldHaveOutline(shape)) {
             graphics2d.setColor(shape.getPrimaryColor().getColor());
             graphics2d.drawRect(x, y, width, height);

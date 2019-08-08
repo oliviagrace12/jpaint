@@ -56,7 +56,7 @@ public class ShapesRenderer {
             renderStrategy = isSelected ? selectedTriangleRenderStrategy : triangleRenderStrategy;
         }
 
-        new ShapeRenderer(renderStrategy).render(shape, paintCanvas);
+        new ShapeRenderer(renderStrategy).render(shape);
     }
 
 }
