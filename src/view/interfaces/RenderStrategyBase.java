@@ -6,7 +6,7 @@ import model.shape.ShapeShadingType;
 /**
  * Created by oliviachisman on 2019-07-16
  */
-public abstract class RenderStrategyBase {
+public abstract class RenderStrategyBase implements IRenderStrategy {
 
     protected final PaintCanvasBase paintCanvas;
 

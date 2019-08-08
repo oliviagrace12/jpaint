@@ -1,6 +1,6 @@
 package view.render;
 
-import view.interfaces.RenderStrategyBase;
+import view.interfaces.IRenderStrategy;
 import view.interfaces.PaintCanvasBase;
 
 /**
@@ -8,15 +8,27 @@ import view.interfaces.PaintCanvasBase;
  */
 public class RenderStrategyFactory {
 
-    public static RenderStrategyBase createEllipseRenderStrategy(PaintCanvasBase paintCanvas) {
+    public static IRenderStrategy createEllipseRenderStrategy(PaintCanvasBase paintCanvas) {
         return new EllipseRenderStrategy(paintCanvas);
     }
 
-    public static RenderStrategyBase createTriangleRenderStrategy(PaintCanvasBase paintCanvas) {
+    public static IRenderStrategy createTriangleRenderStrategy(PaintCanvasBase paintCanvas) {
         return new TriangleRenderStrategy(paintCanvas);
     }
 
-    public static RenderStrategyBase createRectangleRenderStrategy(PaintCanvasBase paintCanvas) {
+    public static IRenderStrategy createRectangleRenderStrategy(PaintCanvasBase paintCanvas) {
         return new RectangleRenderStrategy(paintCanvas);
+    }
+
+    public static IRenderStrategy createSelectedEllipseRenderStrategy(PaintCanvasBase paintCanvas) {
+        return new SelectedEllipseRenderStrategy(new EllipseRenderStrategy(paintCanvas), paintCanvas);
+    }
+
+    public static IRenderStrategy createSelectedTriangleRenderStrategy(PaintCanvasBase paintCanvas) {
+        return new SelectedTriangleRenderStrategy(new TriangleRenderStrategy(paintCanvas), paintCanvas);
+    }
+
+    public static IRenderStrategy createSelectedRectangleRenderStrategy(PaintCanvasBase paintCanvas) {
+        return new SelectedRectangleRenderStrategy(new RectangleRenderStrategy(paintCanvas), paintCanvas);
     }
 }

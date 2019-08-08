@@ -2,6 +2,7 @@ package view.command;
 
 import model.shape.Shape;
 import view.interfaces.ICommand;
+import view.render.ShapesRenderer;
 
 import java.awt.event.MouseEvent;
 import java.util.Set;
@@ -15,13 +16,15 @@ public class SelectCommand implements ICommand {
     private final MouseEvent event2;
     private final Set<Shape> allShapes;
     private final Set<Shape> selectedShapes;
+    private final ShapesRenderer shapesRenderer;
 
     public SelectCommand(MouseEvent event1, MouseEvent event2, Set<Shape> allShapes,
-                         Set<Shape> selectedShapesTracker) {
+                         Set<Shape> selectedShapesTracker, ShapesRenderer shapesRenderer) {
         this.event1 = event1;
         this.event2 = event2;
         this.allShapes = allShapes;
         this.selectedShapes = selectedShapesTracker;
+        this.shapesRenderer = shapesRenderer;
     }
 
     @Override
@@ -37,6 +40,8 @@ public class SelectCommand implements ICommand {
                 selectedShapes.add(shape);
             }
         }
+
+        shapesRenderer.reRenderAllShapes(allShapes);
     }
 
     private boolean collisionOccurred(Shape shape, int zoneMinX, int zoneMaxX, int zoneMinY, int zoneMaxY) {

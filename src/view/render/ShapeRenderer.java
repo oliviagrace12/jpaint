@@ -1,8 +1,8 @@
 package view.render;
 
 import model.shape.Shape;
+import view.interfaces.IRenderStrategy;
 import view.interfaces.PaintCanvasBase;
-import view.interfaces.RenderStrategyBase;
 
 import java.awt.*;
 
@@ -11,9 +11,9 @@ import java.awt.*;
  */
 public class ShapeRenderer {
 
-    private final RenderStrategyBase renderStrategy;
+    private final IRenderStrategy renderStrategy;
 
-    ShapeRenderer(RenderStrategyBase renderStrategy) {
+    ShapeRenderer(IRenderStrategy renderStrategy) {
         this.renderStrategy = renderStrategy;
     }
 

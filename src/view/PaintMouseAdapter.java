@@ -44,7 +44,7 @@ public class PaintMouseAdapter extends MouseAdapter {
         if (currentState.equals(StartAndEndPointMode.DRAW)) {
             command = new DrawCommand(lastMousePressedEvent, event, applicationState, shapesRenderer, allShapes);
         } else if (currentState.equals(StartAndEndPointMode.SELECT)) {
-            command = new SelectCommand(lastMousePressedEvent, event, allShapes, selectedShapes);
+            command = new SelectCommand(lastMousePressedEvent, event, allShapes, selectedShapes, shapesRenderer);
         } else {
             command = new MoveCommand(lastMousePressedEvent, event, allShapes, selectedShapes, shapesRenderer);
         }

@@ -25,7 +25,7 @@ public class Main {
 
         Set<Shape> allShapes = new HashSet<>();
         Set<Shape> selectedShapes = new HashSet<>();
-        ShapesRenderer shapesRenderer = new ShapesRenderer(paintCanvas);
+        ShapesRenderer shapesRenderer = new ShapesRenderer(paintCanvas, selectedShapes);
 
         IJPaintController controller = new JPaintController(uiModule, appState, shapesRenderer, allShapes, selectedShapes);
         controller.setup();
