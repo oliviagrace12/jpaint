@@ -1,7 +1,7 @@
 package view.command;
 
 import model.shape.Shape;
-import view.interfaces.ICommand;
+import view.interfaces.IUndoRedo;
 import view.render.ShapesRenderer;
 
 import java.util.HashSet;
@@ -10,11 +10,12 @@ import java.util.Set;
 /**
  * Created by oliviachisman on 2019-08-06
  */
-public class PasteCommand implements ICommand {
+public class PasteCommand implements IUndoRedo {
 
     private final Set<Shape> copiedShapes;
     private final Set<Shape> allShapes;
     private final ShapesRenderer shapesRenderer;
+    private Set<Shape> myCopiedShapes = new HashSet<>();
 
     public PasteCommand(Set<Shape> copiedShapes, Set<Shape> allShapes, ShapesRenderer shapesRenderer) {
         this.copiedShapes = copiedShapes;
@@ -32,6 +33,7 @@ public class PasteCommand implements ICommand {
         });
         copiedShapes.clear();
         copiedShapes.addAll(temp);
+        myCopiedShapes.addAll(temp);
         shapesRenderer.reRenderAllShapes(allShapes);
     }
 
@@ -47,5 +49,17 @@ public class PasteCommand implements ICommand {
         newShape.setShapeShadingType(shape.getShapeShadingType());
 
         return newShape;
+    }
+
+    @Override
+    public void undo() {
+        allShapes.removeAll(myCopiedShapes);
+        shapesRenderer.reRenderAllShapes(allShapes);
+    }
+
+    @Override
+    public void redo() {
+        allShapes.addAll(myCopiedShapes);
+        shapesRenderer.reRenderAllShapes(allShapes);
     }
 }

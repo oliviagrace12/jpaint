@@ -7,11 +7,13 @@ import view.command.DrawCommand;
 import view.command.MoveCommand;
 import view.command.SelectCommand;
 import view.interfaces.ICommand;
+import view.interfaces.IUndoRedo;
 import view.render.ShapesRenderer;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  * Created by oliviachisman on 2019-07-04
@@ -23,13 +25,15 @@ public class PaintMouseAdapter extends MouseAdapter {
     private MouseEvent lastMousePressedEvent;
     private final IApplicationState applicationState;
     private final ShapesRenderer shapesRenderer;
+    private final Stack<IUndoRedo> commands;
 
     public PaintMouseAdapter(IApplicationState applicationState, ShapesRenderer shapesRenderer, Set<Shape> allShapes,
-                             Set<Shape> selectedShapes) {
+                             Set<Shape> selectedShapes, Stack<IUndoRedo> commands) {
         this.applicationState = applicationState;
         this.shapesRenderer = shapesRenderer;
         this.allShapes = allShapes;
         this.selectedShapes = selectedShapes;
+        this.commands = commands;
     }
 
     @Override
@@ -40,7 +44,7 @@ public class PaintMouseAdapter extends MouseAdapter {
     @Override
     public void mouseReleased(MouseEvent event) {
         StartAndEndPointMode currentState = applicationState.getActiveStartAndEndPointMode();
-        ICommand command;
+        IUndoRedo command;
         if (currentState.equals(StartAndEndPointMode.DRAW)) {
             command = new DrawCommand(lastMousePressedEvent, event, applicationState, shapesRenderer, allShapes);
         } else if (currentState.equals(StartAndEndPointMode.SELECT)) {
@@ -49,5 +53,6 @@ public class PaintMouseAdapter extends MouseAdapter {
             command = new MoveCommand(lastMousePressedEvent, event, allShapes, selectedShapes, shapesRenderer);
         }
         command.run();
+        commands.add(command);
     }
 }
