@@ -6,7 +6,6 @@ import model.shape.StartAndEndPointMode;
 import view.command.DrawCommand;
 import view.command.MoveCommand;
 import view.command.SelectCommand;
-import view.interfaces.ICommand;
 import view.interfaces.IUndoRedo;
 import view.render.ShapesRenderer;
 
@@ -44,11 +43,15 @@ public class PaintMouseAdapter extends MouseAdapter {
     @Override
     public void mouseReleased(MouseEvent event) {
         StartAndEndPointMode currentState = applicationState.getActiveStartAndEndPointMode();
+
+        if (currentState.equals(StartAndEndPointMode.SELECT)) {
+            new SelectCommand(lastMousePressedEvent, event, allShapes, selectedShapes, shapesRenderer).run();
+            return;
+        }
+
         IUndoRedo command;
         if (currentState.equals(StartAndEndPointMode.DRAW)) {
             command = new DrawCommand(lastMousePressedEvent, event, applicationState, shapesRenderer, allShapes);
-        } else if (currentState.equals(StartAndEndPointMode.SELECT)) {
-            command = new SelectCommand(lastMousePressedEvent, event, allShapes, selectedShapes, shapesRenderer);
         } else {
             command = new MoveCommand(lastMousePressedEvent, event, allShapes, selectedShapes, shapesRenderer);
         }

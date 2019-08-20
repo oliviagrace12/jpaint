@@ -4,8 +4,9 @@ import model.interfaces.IApplicationState;
 import model.shape.Shape;
 import view.EventName;
 import view.command.DeleteCommand;
+import view.command.GroupCommand;
 import view.command.PasteCommand;
-import view.interfaces.ICommand;
+import view.command.UngroupCommand;
 import view.interfaces.IUiModule;
 import view.interfaces.IUndoRedo;
 import view.render.ShapesRenderer;
@@ -48,35 +49,55 @@ public class JPaintController implements IJPaintController {
         uiModule.addEvent(EventName.CHOOSE_SECONDARY_COLOR, () -> applicationState.setActiveSecondaryColor());
         uiModule.addEvent(EventName.CHOOSE_SHADING_TYPE, () -> applicationState.setActiveShadingType());
         uiModule.addEvent(EventName.CHOOSE_START_POINT_ENDPOINT_MODE, () -> applicationState.setActiveStartAndEndPointMode());
-        uiModule.addEvent(EventName.COPY, () -> {
-            copiedShapes.clear();
-            copiedShapes.addAll(selectedShapes);
-        });
-        uiModule.addEvent(EventName.PASTE, () -> {
-            IUndoRedo c = new PasteCommand(copiedShapes, allShapes, shapesRenderer);
+        uiModule.addEvent(EventName.COPY, () -> doCopy());
+        uiModule.addEvent(EventName.PASTE, () -> doPaste());
+        uiModule.addEvent(EventName.DELETE, () -> doDelete());
+        uiModule.addEvent(EventName.UNDO, () -> doUndo());
+        uiModule.addEvent(EventName.REDO, () -> doRedo());
+        uiModule.addEvent(EventName.GROUP, () -> {
+            IUndoRedo c = new GroupCommand(selectedShapes, allShapes);
             c.run();
             commands.add(c);
         });
-        uiModule.addEvent(EventName.DELETE, () -> {
-            IUndoRedo c = new DeleteCommand(selectedShapes, allShapes, shapesRenderer);
+        uiModule.addEvent(EventName.UNGROUP, () -> {
+            IUndoRedo c = new UngroupCommand(selectedShapes, allShapes);
             c.run();
             commands.add(c);
         });
-        uiModule.addEvent(EventName.UNDO, () -> {
-            if (commands.isEmpty()) {
-                return;
-            }
-            IUndoRedo c = commands.pop();
-            c.undo();
-            undoCommands.push(c);
-        });
-        uiModule.addEvent(EventName.REDO, () -> {
-            if (undoCommands.isEmpty()) {
-                return;
-            }
-            IUndoRedo c = undoCommands.pop();
-            c.redo();
-            commands.push(c);
-        });
+    }
+
+    private void doCopy() {
+        copiedShapes.clear();
+        copiedShapes.addAll(selectedShapes);
+    }
+
+    private void doPaste() {
+        IUndoRedo c = new PasteCommand(copiedShapes, allShapes, shapesRenderer);
+        c.run();
+        commands.add(c);
+    }
+
+    private void doDelete() {
+        IUndoRedo c = new DeleteCommand(selectedShapes, allShapes, shapesRenderer);
+        c.run();
+        commands.add(c);
+    }
+
+    private void doUndo() {
+        if (commands.isEmpty()) {
+            return;
+        }
+        IUndoRedo c = commands.pop();
+        c.undo();
+        undoCommands.push(c);
+    }
+
+    private void doRedo() {
+        if (undoCommands.isEmpty()) {
+            return;
+        }
+        IUndoRedo c = undoCommands.pop();
+        c.redo();
+        commands.push(c);
     }
 }

@@ -1,7 +1,7 @@
 package view.command;
 
 import model.shape.Shape;
-import view.interfaces.IUndoRedo;
+import view.interfaces.ICommand;
 import view.render.ShapesRenderer;
 
 import java.awt.event.MouseEvent;
@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Created by oliviachisman on 2019-08-04
  */
-public class SelectCommand implements IUndoRedo {
+public class SelectCommand implements ICommand {
 
     private final MouseEvent event1;
     private final MouseEvent event2;
@@ -36,9 +36,12 @@ public class SelectCommand implements IUndoRedo {
 
         selectedShapes.clear();
         for (Shape shape : allShapes) {
-            if (collisionOccurred(shape, zoneMinX, zoneMaxX, zoneMinY, zoneMaxY)) {
-                selectedShapes.add(shape);
-            }
+            shape.getChildren().forEach(s -> {
+                if (collisionOccurred(s, zoneMinX, zoneMaxX, zoneMinY, zoneMaxY)) {
+                    selectedShapes.add(shape);
+                }
+            });
+
         }
 
         shapesRenderer.reRenderAllShapes(allShapes);
@@ -51,15 +54,5 @@ public class SelectCommand implements IUndoRedo {
         int shapeMaxY = Math.max(shape.getY1(), shape.getY2());
 
         return zoneMaxX >= shapeMinX && zoneMaxY >= shapeMinY && shapeMaxX >= zoneMinX && shapeMaxY >= zoneMinY;
-    }
-
-    @Override
-    public void undo() {
-        //todo
-    }
-
-    @Override
-    public void redo() {
-        // todo
     }
 }

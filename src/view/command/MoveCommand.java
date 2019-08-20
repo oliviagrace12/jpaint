@@ -1,7 +1,6 @@
 package view.command;
 
 import model.shape.Shape;
-import view.interfaces.ICommand;
 import view.interfaces.IUndoRedo;
 import view.render.ShapesRenderer;
 
@@ -36,7 +35,7 @@ public class MoveCommand implements IUndoRedo {
         offsetY = event2.getY() - event1.getY();
 
         for (Shape shape : selectedShapes) {
-            moveShape(shape);
+            shape.getChildren().forEach(this::moveShape);
         }
 
         shapesRenderer.reRenderAllShapes(allShapes);
@@ -52,19 +51,23 @@ public class MoveCommand implements IUndoRedo {
     @Override
     public void undo() {
         for (Shape shape : selectedShapes) {
-            shape.setX1(shape.getX1() - offsetX);
-            shape.setX2(shape.getX2() - offsetX);
-            shape.setY1(shape.getY1() - offsetY);
-            shape.setY2(shape.getY2() - offsetY);
+            shape.getChildren().forEach(this::unMoveShape);
         }
 
         shapesRenderer.reRenderAllShapes(allShapes);
     }
 
+    private void unMoveShape(Shape shape) {
+        shape.setX1(shape.getX1() - offsetX);
+        shape.setX2(shape.getX2() - offsetX);
+        shape.setY1(shape.getY1() - offsetY);
+        shape.setY2(shape.getY2() - offsetY);
+    }
+
     @Override
     public void redo() {
         for (Shape shape : selectedShapes) {
-            moveShape(shape);
+            shape.getChildren().forEach(this::moveShape);
         }
 
         shapesRenderer.reRenderAllShapes(allShapes);

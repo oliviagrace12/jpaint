@@ -1,7 +1,6 @@
 package view.command;
 
 import model.shape.Shape;
-import view.interfaces.ICommand;
 import view.interfaces.IUndoRedo;
 import view.render.ShapesRenderer;
 

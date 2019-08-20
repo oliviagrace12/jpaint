@@ -46,17 +46,18 @@ public class ShapesRenderer {
     }
 
     public void renderShape(Shape shape) {
-        boolean isSelected = selectedShapes.contains(shape);
-        IRenderStrategy renderStrategy;
-        if (shape.getShapeType().equals(ShapeType.RECTANGLE)) {
-            renderStrategy = isSelected ? selectedRectangleRenderStrategy : rectangleRenderStrategy;
-        } else if (shape.getShapeType().equals(ShapeType.ELLIPSE)) {
-            renderStrategy = isSelected ? selectedEllipseRenderStrategy : ellipseRenderStrategy;
-        } else {
-            renderStrategy = isSelected ? selectedTriangleRenderStrategy : triangleRenderStrategy;
-        }
+        shape.getChildren().forEach(s -> {boolean isSelected = selectedShapes.contains(shape);
+            IRenderStrategy renderStrategy;
+            if (s.getShapeType().equals(ShapeType.RECTANGLE)) {
+                renderStrategy = isSelected ? selectedRectangleRenderStrategy : rectangleRenderStrategy;
+            } else if (s.getShapeType().equals(ShapeType.ELLIPSE)) {
+                renderStrategy = isSelected ? selectedEllipseRenderStrategy : ellipseRenderStrategy;
+            } else {
+                renderStrategy = isSelected ? selectedTriangleRenderStrategy : triangleRenderStrategy;
+            }
 
-        new ShapeRenderer(renderStrategy).render(shape);
+            new ShapeRenderer(renderStrategy).render(s);
+        });
     }
 
 }

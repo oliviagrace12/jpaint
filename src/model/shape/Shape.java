@@ -1,5 +1,8 @@
 package model.shape;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by oliviachisman on 2019-07-04
  */
@@ -12,6 +15,12 @@ public class Shape {
     private ShapeColor primaryColor;
     private ShapeColor secondaryColor;
     private ShapeShadingType shapeShadingType;
+    private Set<Shape> children;
+
+    public Shape() {
+        children = new HashSet<>();
+        children.add(this);
+    }
 
     public Integer getX1() {
         return x1;
@@ -75,5 +84,14 @@ public class Shape {
 
     public void setShapeShadingType(ShapeShadingType shapeShadingType) {
         this.shapeShadingType = shapeShadingType;
+    }
+
+    public Set<Shape> getChildren() {
+        children.add(this);
+        return children;
+    }
+
+    public void setChildren(Set<Shape> children) {
+        this.children = children;
     }
 }
