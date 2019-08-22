@@ -54,16 +54,8 @@ public class JPaintController implements IJPaintController {
         uiModule.addEvent(EventName.DELETE, () -> doDelete());
         uiModule.addEvent(EventName.UNDO, () -> doUndo());
         uiModule.addEvent(EventName.REDO, () -> doRedo());
-        uiModule.addEvent(EventName.GROUP, () -> {
-            IUndoRedo c = new GroupCommand(selectedShapes, allShapes);
-            c.run();
-            commands.add(c);
-        });
-        uiModule.addEvent(EventName.UNGROUP, () -> {
-            IUndoRedo c = new UngroupCommand(selectedShapes, allShapes);
-            c.run();
-            commands.add(c);
-        });
+        uiModule.addEvent(EventName.GROUP, () -> doGroup());
+        uiModule.addEvent(EventName.UNGROUP, () -> doUngroup());
     }
 
     private void doCopy() {
@@ -99,5 +91,17 @@ public class JPaintController implements IJPaintController {
         IUndoRedo c = undoCommands.pop();
         c.redo();
         commands.push(c);
+    }
+
+    private void doGroup() {
+        IUndoRedo c = new GroupCommand(selectedShapes, allShapes);
+        c.run();
+        commands.add(c);
+    }
+
+    private void doUngroup() {
+        IUndoRedo c = new UngroupCommand(selectedShapes, allShapes);
+        c.run();
+        commands.add(c);
     }
 }
