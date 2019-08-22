@@ -16,7 +16,7 @@ public class GroupCommand implements IUndoRedo {
     private Shape parent;
     private Set<Shape> group = new HashSet<>();
 
-    public GroupCommand(Set<Shape> selectedShapes, Set<Shape> allShapes) {
+    GroupCommand(Set<Shape> selectedShapes, Set<Shape> allShapes) {
         this.selectedShapes = selectedShapes;
         this.allShapes = allShapes;
     }

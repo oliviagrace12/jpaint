@@ -16,7 +16,7 @@ public class DeleteCommand implements IUndoRedo {
     private final ShapesRenderer shapesRenderer;
     private final Set<Shape> removedShapes;
 
-    public DeleteCommand(Set<Shape> selectedShapes, Set<Shape> allShapes, ShapesRenderer shapesRenderer) {
+    DeleteCommand(Set<Shape> selectedShapes, Set<Shape> allShapes, ShapesRenderer shapesRenderer) {
         this.selectedShapes = selectedShapes;
         this.allShapes = allShapes;
         this.shapesRenderer = shapesRenderer;

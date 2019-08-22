@@ -20,7 +20,7 @@ public class MoveCommand implements IUndoRedo {
     private int offsetX;
     private int offsetY;
 
-    public MoveCommand(MouseEvent event1, MouseEvent event2, Set<Shape> allShapes, Set<Shape> selectedShapes,
+    MoveCommand(MouseEvent event1, MouseEvent event2, Set<Shape> allShapes, Set<Shape> selectedShapes,
                        ShapesRenderer shapesRenderer) {
         this.event1 = event1;
         this.event2 = event2;

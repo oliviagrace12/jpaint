@@ -20,7 +20,7 @@ public class DrawCommand implements IUndoRedo {
     private Shape shape;
     private final Set<Shape> allShapes;
 
-    public DrawCommand(MouseEvent event1, MouseEvent event2, IApplicationState applicationState,
+    DrawCommand(MouseEvent event1, MouseEvent event2, IApplicationState applicationState,
                        ShapesRenderer shapeRenderer, Set<Shape> allShapes) {
         this.event1 = event1;
         this.event2 = event2;

@@ -3,10 +3,7 @@ package controller;
 import model.interfaces.IApplicationState;
 import model.shape.Shape;
 import view.EventName;
-import view.command.DeleteCommand;
-import view.command.GroupCommand;
-import view.command.PasteCommand;
-import view.command.UngroupCommand;
+import view.command.*;
 import view.interfaces.IUiModule;
 import view.interfaces.IUndoRedo;
 import view.render.ShapesRenderer;
@@ -64,13 +61,13 @@ public class JPaintController implements IJPaintController {
     }
 
     private void doPaste() {
-        IUndoRedo c = new PasteCommand(copiedShapes, allShapes, shapesRenderer);
+        IUndoRedo c = UndoRedoCommandFactory.createPasteCommand(copiedShapes, allShapes, shapesRenderer);
         c.run();
         commands.add(c);
     }
 
     private void doDelete() {
-        IUndoRedo c = new DeleteCommand(selectedShapes, allShapes, shapesRenderer);
+        IUndoRedo c = UndoRedoCommandFactory.createDeleteCommand(selectedShapes, allShapes, shapesRenderer);
         c.run();
         commands.add(c);
     }
@@ -94,13 +91,13 @@ public class JPaintController implements IJPaintController {
     }
 
     private void doGroup() {
-        IUndoRedo c = new GroupCommand(selectedShapes, allShapes);
+        IUndoRedo c = UndoRedoCommandFactory.createGroupCommand(selectedShapes, allShapes);
         c.run();
         commands.add(c);
     }
 
     private void doUngroup() {
-        IUndoRedo c = new UngroupCommand(selectedShapes, allShapes);
+        IUndoRedo c = UndoRedoCommandFactory.createUngroupCommand(selectedShapes, allShapes);
         c.run();
         commands.add(c);
     }

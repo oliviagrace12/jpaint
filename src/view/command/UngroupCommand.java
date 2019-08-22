@@ -16,7 +16,7 @@ public class UngroupCommand implements IUndoRedo {
     private final Set<Shape> group;
     private Shape parent;
 
-    public UngroupCommand(Set<Shape> selectedShapes, Set<Shape> allShapes) {
+    UngroupCommand(Set<Shape> selectedShapes, Set<Shape> allShapes) {
         this.allShapes = allShapes;
         this.selectedShapes = selectedShapes;
         this.group = new HashSet<>();

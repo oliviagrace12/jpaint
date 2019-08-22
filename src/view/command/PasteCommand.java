@@ -17,7 +17,7 @@ public class PasteCommand implements IUndoRedo {
     private final ShapesRenderer shapesRenderer;
     private Set<Shape> myCopiedShapes = new HashSet<>();
 
-    public PasteCommand(Set<Shape> copiedShapes, Set<Shape> allShapes, ShapesRenderer shapesRenderer) {
+    PasteCommand(Set<Shape> copiedShapes, Set<Shape> allShapes, ShapesRenderer shapesRenderer) {
         this.copiedShapes = copiedShapes;
         this.allShapes = allShapes;
         this.shapesRenderer = shapesRenderer;
@@ -26,11 +26,11 @@ public class PasteCommand implements IUndoRedo {
     @Override
     public void run() {
         Set<Shape> temp = new HashSet<>();
-        copiedShapes.forEach(shape -> {
-            Shape newShape = deepCopyShape(shape);
+        copiedShapes.forEach(shape -> shape.getChildren().forEach(child -> {
+            Shape newShape = deepCopyShape(child);
             temp.add(newShape);
             allShapes.add(newShape);
-        });
+        }));
         copiedShapes.clear();
         copiedShapes.addAll(temp);
         myCopiedShapes.addAll(temp);
