@@ -11,10 +11,7 @@ import java.awt.*;
 /**
  * Created by oliviachisman on 2019-08-07
  */
-public class SelectedTriangleRenderStrategy implements IRenderStrategyDecorator
-
-a
-{
+public class SelectedTriangleRenderStrategy implements IRenderStrategyDecoratorZZ {
 
     private final IRenderStrategy triangleRenderStrategy;
     private final PaintCanvasBase paintCanvas;
