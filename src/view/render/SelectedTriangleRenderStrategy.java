@@ -2,6 +2,7 @@ package view.render;
 
 import model.shape.Shape;
 import view.interfaces.IRenderStrategy;
+import view.interfaces.IRenderStrategyDecorator;
 import view.interfaces.PaintCanvasBase;
 import view.interfaces.RenderStrategyBase;
 
@@ -10,7 +11,10 @@ import java.awt.*;
 /**
  * Created by oliviachisman on 2019-08-07
  */
-public class SelectedTriangleRenderStrategy implements IRenderStrategy {
+public class SelectedTriangleRenderStrategy implements IRenderStrategyDecorator
+
+a
+{
 
     private final IRenderStrategy triangleRenderStrategy;
     private final PaintCanvasBase paintCanvas;

@@ -2,6 +2,7 @@ package view.render;
 
 import model.shape.Shape;
 import view.interfaces.IRenderStrategy;
+import view.interfaces.IRenderStrategyDecorator;
 import view.interfaces.PaintCanvasBase;
 
 import java.awt.*;
@@ -9,7 +10,7 @@ import java.awt.*;
 /**
  * Created by oliviachisman on 2019-08-07
  */
-public class SelectedEllipseRenderStrategy implements IRenderStrategy {
+public class SelectedEllipseRenderStrategy implements IRenderStrategyDecorator {
 
     private final IRenderStrategy ellipseRenderStrategy;
     private final PaintCanvasBase paintCanvas;
